@@ -100,7 +100,7 @@ export function setupCommands(bot) {
         const messageId = msg.message_id;
 
         const welcomeMessage = `
-<b><u>Welcome to @TeamXpirates Anime Schedule Bot!</u></b>
+<b><u>Welcome to our Anime Schedule Bot!</u></b>
 
 📅 <b>Schedule Commands:</b>
 • <code>/today</code> - Today's anime schedule
@@ -119,7 +119,8 @@ export function setupCommands(bot) {
 <code>addanime One Piece</code> - Add One Piece to list
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
-<blockquote><b>Powered by @TeamXpirates</b></blockquote>
+<blockquote><b>Powered by @TeamXpirates\n</b></blockquote>
+<blockquote><b>Join Us @AnimeKe14Hai</b></blockquote>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
         `;
 
@@ -199,16 +200,16 @@ export function setupCommands(bot) {
             if (customAnime.length === 0) {
                 const customList = await CustomAnimeList.getUserCustomList(userId);
                 if (customList.length === 0) {
-                    await bot.sendMessage(chatId, '🔖 Your custom list is empty!\n\nUse /addanime <title> to add anime to your list.\n\n━━━━━━━━━━━━━━━━━━━\n<b>Powered by @TeamXpirates</b>\n━━━━━━━━━━━━━━━━━━━', { parse_mode: 'HTML' });
+                    await bot.sendMessage(chatId, '🔖 Your custom list is empty!\n\nUse /addanime name to add anime to your list.', { parse_mode: 'HTML' });
                 } else {
-                    await bot.sendMessage(chatId, `🔍 No anime from your custom list scheduled for ${dayCapitalized}.\n\n━━━━━━━━━━━━━━━━━━━\n<b>Powered by @TeamXpirates</b>\n━━━━━━━━━━━━━━━━━━━`, { parse_mode: 'HTML' });
+                    await bot.sendMessage(chatId, `🔍 No anime from your custom list scheduled for ${dayCapitalized}.`, { parse_mode: 'HTML' });
                 }
                 await deleteCommandMessage(bot, chatId, fetchingMsg.message_id);
                 await deleteCommandMessage(bot, chatId, messageId);
                 return;
             }
 
-            const message = `<b><u>${dayCapitalized.toUpperCase()} SCHEDULED ANIME BY: @TEAMXPIRATES</u></b>\n${AnimeSchedule.formatAnimeList(customAnime)}`;
+            const message = `<b><u>${dayCapitalized.toUpperCase()} SCHEDULED ANIME FOR: @ANIMEKE14HAI</u></b>\n${AnimeSchedule.formatAnimeList(customAnime)}`;
 
             if (message.length > 1000) {
                 await sendLongMessage(bot, chatId, message, { parse_mode: 'HTML' });
@@ -239,10 +240,11 @@ export function setupCommands(bot) {
             const added = await CustomAnimeList.addAnimeToUserList(userId, animeTitle);
 
             if (added) {
-                await bot.sendMessage(chatId, `✅ <b>"${animeTitle}"</b> added to your custom list!\n\n━━━━━━━━━━━━━━━━━━━\n<b>Powered by @TeamXpirates</b>\n━━━━━━━━━━━━━━━━━━━`, { parse_mode: 'HTML' });
+                await bot.sendMessage(chatId, `✅ <b>"${animeTitle}"</b> added to your custom list!`, { parse_mode: 'HTML' });
             } else {
-                await bot.sendMessage(chatId, `🔖 <b>"${animeTitle}"</b> is already in your custom list.\n\n━━━━━━━━━━━━━━━━━━━\n<b>Powered by @TeamXpirates</b>\n━━━━━━━━━━━━━━━━━━━`, { parse_mode: 'HTML' });
+                await bot.sendMessage(chatId, `🔖 <b>"${animeTitle}"</b> is already in your custom list.`, { parse_mode: 'HTML' });
             }
+
             await deleteCommandMessage(bot, chatId, messageId);
         } catch (error) {
             console.error('Error adding anime:', error);
@@ -263,9 +265,9 @@ export function setupCommands(bot) {
             const removed = await CustomAnimeList.removeAnimeFromUserList(userId, animeTitle);
 
             if (removed) {
-                await bot.sendMessage(chatId, `🗑️ <b>"${animeTitle}"</b> removed from your custom list!\n\n━━━━━━━━━━━━━━━━━━━\n<b>Powered by @TeamXpirates</b>\n━━━━━━━━━━━━━━━━━━━`, { parse_mode: 'HTML' });
+                await bot.sendMessage(chatId, `🗑️ <b>"${animeTitle}"</b> removed from your custom list!`, { parse_mode: 'HTML' });
             } else {
-                await bot.sendMessage(chatId, `❌ <b>"${animeTitle}"</b> not found in your custom list.\n\n━━━━━━━━━━━━━━━━━━━\n<b>Powered by @TeamXpirates</b>\n━━━━━━━━━━━━━━━━━━━`, { parse_mode: 'HTML' });
+                await bot.sendMessage(chatId, `❌ <b>"${animeTitle}"</b> not found in your custom list.`, { parse_mode: 'HTML' });
             }
             await deleteCommandMessage(bot, chatId, messageId);
         } catch (error) {
@@ -286,7 +288,7 @@ export function setupCommands(bot) {
             const customList = await CustomAnimeList.getUserCustomList(userId);
 
             if (customList.length === 0) {
-                await bot.sendMessage(chatId, '🔖 Your custom anime list is empty!\n\nUse /addanime <title> to add anime.\n\n━━━━━━━━━━━━━━━━━━━\n🏮 <b>Powered by @TeamXpirates</b> 🏮\n━━━━━━━━━━━━━━━━━━━', { parse_mode: 'HTML' });
+                await bot.sendMessage(chatId, '🔖 Your custom anime list is empty!\n\nUse /addanime name to add anime.', { parse_mode: 'HTML' });
                 await deleteCommandMessage(bot, chatId, messageId);
                 return;
             }
@@ -295,7 +297,7 @@ export function setupCommands(bot) {
             customList.forEach((anime, index) => {
                 message += `${index + 1}. <b>${anime}</b>\n`;
             });
-            message += `━━━━━━━━━━━━━━━━━━━\n<i>📊 Total: <b>${customList.length}</b> anime</i>\n<blockquote><b>Powered by @TeamXpirates</b></blockquote>\n`;
+            message += `━━━━━━━━━━━━━━━━━━━\n<i>📊 Total: <b>${customList.length}</b> anime</i>\n<blockquote><b>Join Us: @AnimeKe14Hai</b></blockquote>\n<blockquote><b>Powered By: @TeamXpirates</b></blockquote>\n`;
 
             if (message.length > 1000) {
                 await sendLongMessage(bot, chatId, message, { parse_mode: "HTML" });
@@ -325,9 +327,9 @@ export function setupCommands(bot) {
             const cleared = await CustomAnimeList.clearUserList(userId);
 
             if (cleared) {
-                await bot.sendMessage(chatId, '🗑️ <b>Your custom anime list has been cleared!</b>\n\n━━━━━━━━━━━━━━━━━━━\n🏮 <b>Powered by @TeamXpirates</b> 🏮\n━━━━━━━━━━━━━━━━━━━', { parse_mode: 'HTML' });
+                await bot.sendMessage(chatId, '🗑️ <b>Your custom anime list has been cleared!</b>', { parse_mode: 'HTML' });
             } else {
-                await bot.sendMessage(chatId, '🔖 Your custom list is already empty.\n\n━━━━━━━━━━━━━━━━━━━\n🏮 <b>Powered by @TeamXpirates</b> 🏮\n━━━━━━━━━━━━━━━━━━━', { parse_mode: 'HTML' });
+                await bot.sendMessage(chatId, '🔖 Your custom list is already empty.', { parse_mode: 'HTML' });
             }
             await deleteCommandMessage(bot, chatId, messageId);
         } catch (error) {
@@ -339,7 +341,7 @@ export function setupCommands(bot) {
 }
 
 async function checkAdmin(bot, msg, chatId) {
-    const userId = String(msg.from.id); // Corrected
+    const userId = String(msg.from.id);
     const adminIds = Config.ADMIN_IDS.split(',');
 
     if (!adminIds.includes(userId)) {
@@ -355,7 +357,7 @@ async function sendAnimeSchedule(bot, chatId, day, displayName) {
         fetchingMsg = await bot.sendMessage(chatId, '⏳ Fetching anime schedule...');
 
         const animeList = await AnimeSchedule.getAnimeByDay(day);
-        const message = `<b><u>📅 ANIME SCHEDULE - ${displayName.toUpperCase()} BY: @TEAMXPIRATES</u></b>\n\n${AnimeSchedule.formatAnimeList(animeList)}`;
+        const message = `<b><u>📅 ANIME SCHEDULE - ${displayName.toUpperCase()} FOR: @ANIMEKE14HAI</u></b>\n\n${AnimeSchedule.formatAnimeList(animeList)}`;
 
         if (message.length > 1000) {
             await sendLongMessage(bot, chatId, message, { parse_mode: 'HTML' });

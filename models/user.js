@@ -79,7 +79,7 @@ export class AnimeSchedule {
 
     static formatAnimeList(animeList) {
         if (animeList.length === 0) {
-            return '🔍 No anime scheduled for this day.\n\n━━━━━━━━━━━━━━━━━━━\n <b>Powered by @TeamXpirates</b> 🏮\n━━━━━━━━━━━━━━━━━━━';
+            return '🔍 No anime scheduled for this day.';
         }
 
         let message = '\n';
@@ -101,7 +101,7 @@ export class AnimeSchedule {
             message += '<b>┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈</b>\n';
         });
 
-        message += `\n<i>📊 Total anime: ${animeList.length}</i>\n<b><blockquote>Powered by @TeamXpirates</blockquote></b>`;
+        message += `\n<i>📊 Total anime: ${animeList.length}</i>\n<blockquote>Join Us: @AnimeKe14Hai<b>\n</b></blockquote><b><blockquote>Powered By: @TeamXpirates</blockquote></b>`;
         return message;
     }
 }
