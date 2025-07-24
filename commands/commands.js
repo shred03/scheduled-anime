@@ -119,8 +119,8 @@ export function setupCommands(bot) {
 <code>addanime One Piece</code> - Add One Piece to list
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
-<blockquote><b>Powered by @TeamXpirates\n</b></blockquote>
 <blockquote><b>Join Us @AnimeKe14Hai</b></blockquote>
+<blockquote><b>Powered by @TeamXpirates</b></blockquote>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
         `;
 

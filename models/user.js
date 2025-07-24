@@ -36,20 +36,25 @@ export class AnimeSchedule {
             const airType = anime.airType || 'Sub';
             const episodeDate = anime.episodeDate;
 
-            const date = new Date(episodeDate);
-            const istDate = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+            if (!episodeDate) return; // Skip if no date
 
-            const dayOfWeek = istDate.toLocaleDateString('en-IN', {
-                weekday: 'long',
-                timeZone: 'Asia/Kolkata'
-            }).toLowerCase();
+            const date = new Date(episodeDate);
+            
+            // Convert to IST (UTC+5:30)
+            const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+            const istDate = new Date(date.getTime() + istOffset);
+
+            // Get day of week properly
+            const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const dayOfWeek = dayNames[istDate.getUTCDay()];
 
             if (dayOfWeek === targetDay.toLowerCase()) {
-                const formattedTime = istDate.toLocaleString('en-IN', {
+                // Format time in 12-hour format
+                const formattedTime = istDate.toLocaleString('en-US', {
                     hour: 'numeric',
                     minute: '2-digit',
                     hour12: true,
-                    timeZone: 'Asia/Kolkata'
+                    timeZone: 'UTC' // Since we already converted to IST
                 });
 
                 const key = name.toLowerCase().trim();
@@ -77,31 +82,30 @@ export class AnimeSchedule {
         return sortedAnime;
     }
 
-    static formatAnimeList(animeList) {
+    static formatAnimeList(animeList, dayName = 'today') {
         if (animeList.length === 0) {
-            return '🔍 No anime scheduled for this day.';
+            return `🔍 No anime scheduled for ${dayName}.`;
         }
 
         let message = '\n';
         animeList.forEach((anime, index) => {
             message += `✦ <b>${anime.title}</b>\n`;
             message += `✦ <b>Episode:</b> <code>${anime.episode}</code> | <b>Status:</b> <code>${anime.status}</code>\n`;
-            // message += `📊 Status: \`${anime.status}\`\n`;
+            
             if (anime.types.length === 1) {
                 message += `✦ <b>Type:</b> • <code>${anime.types[0].type}</code> | <code>${anime.types[0].time}</code>\n`;
-                // message += `Time: ${anime.types[0].time}\n`;
             } else {
                 message += '✦ <b>Types:</b>';
                 anime.types.forEach((typeInfo) => {
                     message += ` • <code>${typeInfo.type}: ${typeInfo.time}</code> `;   
                 });
-                message+="\n"
+                message += "\n";
             }
             
             message += '<b>┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈</b>\n';
         });
 
-        message += `\n<i>📊 Total anime: ${animeList.length}</i>\n<blockquote>Join Us: @AnimeKe14Hai<b>\n</b></blockquote><b><blockquote>Powered By: @TeamXpirates</blockquote></b>`;
+        message += `\n<i>📊 Total anime: ${animeList.length}</i>\n<blockquote><b>Join Us: @AnimeKe14Hai</b></blockquote>\n<b><blockquote>Powered By: @TeamXpirates</blockquote></b>`;
         return message;
     }
 }
