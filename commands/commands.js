@@ -342,7 +342,7 @@ export function setupCommands(bot) {
 
 async function checkAdmin(bot, msg, chatId) {
     const userId = String(msg.from.id);
-    const adminIds = Config.ADMIN_IDS.split(',');
+    const adminIds = ADMIN_IDS.split(',');
 
     if (!adminIds.includes(userId)) {
         await bot.sendMessage(chatId, "❌ You are not an admin");
